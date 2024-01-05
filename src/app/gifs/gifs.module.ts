@@ -4,6 +4,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { GifCardComponent } from './components/gif-card/gif-card.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -11,11 +13,13 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     HomePageComponent,
     SearchBoxComponent,
-    CardListComponent
+    CardListComponent,
+    GifCardComponent
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   exports:[
     HomePageComponent

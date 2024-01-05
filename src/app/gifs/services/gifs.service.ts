@@ -13,7 +13,9 @@ export class GifsService {
 
   public gifList : Gif[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.getLocalStorage();
+   }
 
   get tagsHistory(){
     return [...this._tagsHistory];
@@ -26,6 +28,7 @@ export class GifsService {
       this._tagsHistory = this._tagsHistory.filter((oldTag) => oldTag != tag)
     this._tagsHistory.unshift(tag);
     this._tagsHistory = this._tagsHistory.splice(0,10);
+    this.saveLocalStorage();
   }
   // async  searchTag(tag: string): Promise<void>{
   //   if(tag.length===0) return;
@@ -51,5 +54,20 @@ export class GifsService {
     .subscribe(resp => {
       this.gifList = resp.data;
     })
+  }
+
+  /**Method to use LocalStorage and save the history tags information */
+  private saveLocalStorage(): void{
+    localStorage.setItem('historyTags', JSON.stringify(this._tagsHistory));
+  }
+
+  private getLocalStorage(): void {
+    if(!localStorage.getItem('historyTags')) return;
+
+    this._tagsHistory = JSON.parse(localStorage.getItem('historyTags')!);
+
+    const tag = this._tagsHistory.at(0);
+
+    this.searchTag(tag!);
   }
 }
